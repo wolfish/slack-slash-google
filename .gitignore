@@ -1,0 +1,3 @@
+vendor/*
+src/Config.php
+composer.phar

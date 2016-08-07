@@ -1,0 +1,38 @@
+<?php 
+/**
+*   See README.md to get help for basic configuration
+*/
+namespace Wolfish;
+
+abstract class Config
+{
+    
+    // App settings
+    const MAXPOST = 10000;
+    const MULTIPLE_RESULTS_TEXT = 'Here are the results';
+
+    // Slack settings
+    const SLACK_TOKEN = 'your_slack_slash_command_token';
+    const SLACK_REPONSE_TYPE = 'in_channel';
+    const SLACK_UNFURL_MEDIA = true;
+    const SLACK_UNFURL_LINKS = true;
+    
+    // Google custom search auth
+    const GOOGLE_APP_NAME = 'your_app_name_whatever';
+    const GOOGLE_DEV_KEY = 'your_google_dev_key';
+    const GOOGLE_CX_KEY = 'your_google_custom_search_key';
+    const GOOGLE_LIMIT_EXCEEDED = 'You have exceeded the daily quota for Custom Search queries. The quota will be reset at midnight Pacific Time (PT).';
+
+    // Google custom search parameters
+    // default settings are for one image result
+    const GOOGLE_SEARCH_PARAMETERS = [
+        'safe' => 'high',       // filter results
+        'num' => 1,             // number of results
+        'searchType' => 'image' // search type
+        // you can add more parameters here
+
+        // See https://developers.google.com/custom-search/json-api/v1/reference/cse/list 
+        // for full list of available parameters
+    ];
+
+}

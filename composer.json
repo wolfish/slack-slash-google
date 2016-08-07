@@ -1,0 +1,20 @@
+{
+    "name": "wolfish/slack-slash-google",
+    "description": "Simple response for Slack \"slash command\" with Google Custom Search results",
+    "version": "1.0.0",
+    "type": "project",
+    "license": "MIT",
+    "authors": [{
+        "name": "Wilq",
+        "homepage": "https://wolfish.pl",
+        "role": "Developer"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Wolfish\\": "src/"
+        }
+    },
+    "require": {
+        "google/apiclient": "1.0.*@beta"
+    }
+}
