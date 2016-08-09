@@ -13,15 +13,18 @@ abstract class Config
 
     // Slack settings
     const SLACK_TOKEN = 'your_slack_slash_command_token';
-    const SLACK_REPONSE_TYPE = 'in_channel';
-    const SLACK_UNFURL_MEDIA = true;
-    const SLACK_UNFURL_LINKS = true;
+    const SLACK_RESPONSE_PARAMETERS = [
+        'response_type' => 'in_channel',    // public or private display
+        'unfurl_media' => true,
+        'unfurl_links' => true
+    ];
     
     // Google custom search auth
     const GOOGLE_APP_NAME = 'your_app_name_whatever';
     const GOOGLE_DEV_KEY = 'your_google_dev_key';
     const GOOGLE_CX_KEY = 'your_google_custom_search_key';
     const GOOGLE_LIMIT_EXCEEDED = 'You have exceeded the daily quota for Custom Search queries. The quota will be reset at midnight Pacific Time (PT).';
+    const GOOGLE_NO_RESULT = 'No results found';
 
     // Google custom search parameters
     // default settings are for one image result

@@ -71,7 +71,7 @@ Current TODO's are:
 * More commands providing rest of CSE parameters
 * User control (allowed/banned users)
 * Time/query count limitation per user 
-* Command to control `in_channel` like `#pub` and `#priv`
+* ~~Command to control `in_channel` like `#pub` and `#priv`~~ (done)
 
 ## License
 Project released under the MIT license. See the LICENSE file for more information.
