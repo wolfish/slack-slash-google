@@ -9,7 +9,7 @@ By default, this tool returns one image as response, so it can be used to spice 
 
 It parses commands provided after hashtags (full list of them lower in this doc), so by adding `#link #multi` in beginning of your query you can get first ten results from google.
 
-There are many other ways to use this, and you can easliy configure default behavior.
+There are many other ways to use this, and you can easily configure default behavior.
 Also, by configuring the CSE itself you can limit searches to one site, or make results from certain site priority/blocked, the possibilities are endless.
 
 ## Available commands
@@ -31,27 +31,28 @@ You can of course join commands, so `/xyz #multi #20 #link best cars` gives you 
 * Google account to get Dev key, and configure Custom Search Engine
 
 ## Installation
-1. Create new dir on your server and download [latest release](https://github.com/wolfish/slack-slash-google/releases)
-2. Unpack it, set proper permissions, create new virtual host or just get URL pointing to it
-2. Create new "Slash command" in your Slack team
+1. Create new dir on your server and download and unpack [latest release](https://github.com/wolfish/slack-slash-google/releases)
+2. [Get Composer](https://getcomposer.org/download/) to your dir if you don't have it installed yet
+3. Run `php composer.phar update` to get required libraries
+4. Create new "Slash command" in your Slack team
   - Go to https://**YOUR-TEAM**.slack.com/apps/manage/custom-integrations
   - Select "Slash commands" and "Add configuration"
   - Set "URL" to one thats pointing to your new dir with dowloaded app (**IMPORTANT** it HAVE to be HTTPS!)
   - Set "Method" to POST
-  - Copy value from "Token" and paste it to `src/Config.php.dist` to `const SLACK_TOKEN = 'your_slack_slash_command_token';`
+  - Copy value from "Token" and paste it to `src/Config.php.dist` to `'your_slack_slash_command_token'`
   - Set rest of settings however you want
-3. Enable "Google Custom Search API" and get developer key
+5. Enable "Google Custom Search API" and get developer key
   - Login to https://console.developers.google.com go to "Library", search for "custom search api" select it and **ENABLE** it
   - Go to "Credentials" and "Create credentials -> API key" then select "Server key"
-  - You can give it a name, and IP restrictions. After that copy the generated key and paste it in `src/Config.php.dist` as value in `const GOOGLE_DEV_KEY = 'your_google_dev_key';`
-4. Create an CSE
+  - You can give it a name, and IP restrictions. After that copy the generated key and paste it in `src/Config.php.dist` as value in `'your_google_dev_key'`
+6. Create an CSE
   - Login to https://cse.google.com and create new custom search
   - You have to add at least one website that will be searched for results as priority
   - After adding move to configuration panel
   - Set "Image search" to ON (**IMPORTANT** if you don't do it image results will not be shown)
   - In "Sites to search" set select to "Search whole web (...)" (**IMPORTANT** otherwise only selected website will be searched for results)
-  - Click on "Search ID" and copy key to `src/Config.php.dist` as value in `const GOOGLE_CX_KEY = 'your_google_custom_search_key';`
-5. Edit `src/Config.php.dist` and set rest of the settings as you require (or leave them as default). Then change file name to `Config.php`
+  - Click on "Search ID" and copy key to `src/Config.php.dist` as value in `'your_google_custom_search_key'`
+7. Change file name to `Config.php`
 
 It should work after that, you can of course modify CSE settings to your requirements, like results only from one site, keywords, etc.
 
@@ -70,7 +71,7 @@ Current TODO's are:
 * More commands providing rest of CSE parameters
 * User control (allowed/banned users)
 * Time/query count limitation per user 
-* Paramter to control `in_channel` like `#pub` and `#priv`
+* Command to control `in_channel` like `#pub` and `#priv`
 
 ## License
 Project released under the MIT license. See the LICENSE file for more information.
