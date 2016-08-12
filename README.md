@@ -69,7 +69,7 @@ Any feedback or code contribution that is useful is welcome.
 
 Current TODO's are:
 * More commands providing rest of CSE parameters
-* User control (allowed/banned users)
+* ~~User control (allowed/banned users)~~ (mostly done)
 * Time/query count limitation per user 
 * ~~Command to control `in_channel` like `#pub` and `#priv`~~ (done)
 

@@ -1,5 +1,6 @@
 <?php
 use Wolfish\Config;
+use Wolfish\User;
 use Wolfish\GoogleRequest;
 
 require_once 'vendor/autoload.php';
@@ -23,6 +24,14 @@ foreach ($_POST as $key => $val) {
 if ($_POST['token'] !== Config::SLACK_TOKEN) {
     echo '{ "text": "Invalid slack token" }';
     exit;
+}
+
+if (!isset($argv[1])) {
+    $user = new User($_POST['user_id'], $_POST['user_name']);
+    $access = $user->checkAccess();
+    if ($access !== true) {
+        echo $access;
+    }
 }
 
 $result = new GoogleRequest();
