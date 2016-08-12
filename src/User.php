@@ -1,7 +1,6 @@
 <?php
-namespace Wolfish;
 
-use Wolfish\Config;
+namespace Wolfish; 
 
 class User
 {
@@ -37,5 +36,4 @@ class User
 
         return true;
     }
-
 }

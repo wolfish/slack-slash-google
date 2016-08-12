@@ -15,13 +15,13 @@ class Response
     {
         if (count($this->_items) > 1) {
             foreach ($this->_items as $k => $item) {
-                $responseText[] = $item->getLink();
+                $responseText[] = $item;
                 if ($k == 19) {
                     break;
                 } // Slack limitation
             }
         } elseif ($this->_items[0] instanceof \Google_Service_Customsearch_Result) {
-            $responseText = $this->_items[0]->getLink();
+            $responseText = $this->_items[0];
         } else {
             $responseText = Config::GOOGLE_NO_RESULT;
         }
@@ -31,10 +31,14 @@ class Response
         if (is_array($responseText)) {
             $response['text'] = Config::MULTIPLE_RESULTS_TEXT;
             foreach ($responseText as $num => $t) {
-                $response['attachments'][] = array('text' => ($num + 1).'. '.$t."\n");
+                $response['attachments'][] = array('text' => ($num + 1).'. '.$t->getTitle()."\n".$t->getLink());
             }
         } else {
-            $response['text'] = $responseText;
+            if ($params->isImageSearch()) {
+                $response['text'] = $responseText->getLink();
+            } else {
+                $response['text'] = $responseText->getTitle()."\n".$responseText->getLink();
+            }
         }
 
         return json_encode($response);

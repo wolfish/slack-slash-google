@@ -19,6 +19,8 @@ Also, by configuring the CSE itself you can limit searches to one site, or make 
 - `#link` - get result as standard link
 - `#one` - get one result (default)
 - `#multi` - get multiple results (10 by default)
+- `#priv` - display results only for you
+- `#pub` - display results public in conversation
 
 You can of course join commands, so `/xyz #multi #20 #link best cars` gives you list of ten links of "best cars" starting from 20 result.
 
@@ -69,7 +71,7 @@ Any feedback or code contribution that is useful is welcome.
 
 Current TODO's are:
 * More commands providing rest of CSE parameters
-* ~~User control (allowed/banned users)~~ (mostly done)
+* ~~User control (allowed/banned users)~~ (basic done)
 * Time/query count limitation per user 
 * ~~Command to control `in_channel` like `#pub` and `#priv`~~ (done)
 

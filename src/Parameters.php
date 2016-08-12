@@ -111,4 +111,9 @@ class Parameters
 
         return $slackParams;
     }
+
+    public function isImageSearch()
+    {
+        return isset($this->_request['searchType']) && ($this->_request['searchType'] === 'image');
+    }
 }
