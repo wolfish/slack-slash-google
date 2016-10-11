@@ -13,18 +13,31 @@ There are many other ways to use this, and you can easily configure default beha
 Also, by configuring the CSE itself you can limit searches to one site, or make results from certain site priority/blocked, the possibilities are endless.
 
 ## Available commands
-- `#[number]` - get [number] result of the search (or if multiple results - start with this number)
-- `#image` - get result as an image (default)
-- `#gif` - get result as an GIF image
-- `#link` - get result as standard link
+### Results display control
 - `#one` - get one result (default)
 - `#multi` - get multiple results (10 by default)
+- `#[number]` - get [number] result of the search (or if multiple results - start with this number)
+
+### Results type
+- `#link` - get result as standard link
+- `#image` - get result as an image (default)
+  - **Using any of below commands forces result type as image**
+  - `#gif` - get result as an GIF image
+  - `#color` / `#gray` / `#mono` - search only for images: color, grayscale, black&white
+
+### Slack display
 - `#priv` - display results only for you
-- `#pub` - display results public in conversation
+- `#pub` - display results public in conversation (default)
 
 You can of course join commands, so `/xyz #multi #20 #link best cars` gives you list of ten links of "best cars" starting from 20 result.
 
-**Every text before or between commands is ignored** `/xyz not #image working #one but this is` will be searching for "but this is" with one image result 
+**Every text before or between commands is ignored** 
+
+`/cse not #image working #one but this is` will be searching for "but this is" with one image result 
+
+**Order of commands is important**
+
+`/cse #multi #link #gray cats` will return Image results, as last parameter forces it
 
 ## Requirements
 * PHP 5.5 or higher (also tested with PHP 7)

@@ -15,7 +15,7 @@ class Parameters
     private function parseRequest()
     {
         $this->parsed = true;
-        $regex = '/#(\d|gif|image|link|one|multi|priv|pub)/i';
+        $regex = '/#(\d|gif|image|link|one|multi|priv|pub|color|gray|mono)/i';
         $cmds = preg_split($regex, $this->request['text'], null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         foreach ($cmds as $k => $cmd) {
@@ -31,11 +31,18 @@ class Parameters
             switch ($cmd) {
             case 'gif':
                 $this->request['searchType'] = 'image';
-                $this->request['fileType'] = 'gif';
+                $this->request['fileType'] = $cmd;
                 break;
 
             case 'image':
                 $this->request['searchType'] = 'image';
+                break;
+
+            case 'color':
+            case 'gray':
+            case 'mono':
+                $this->request['searchType'] = 'image';
+                $this->request['imgColorType'] = $cmd;
                 break;
 
             case 'link':
@@ -88,6 +95,7 @@ class Parameters
                 unset($params['searchType']);
             } else {
                 $params['searchType'] = $this->request['searchType'];
+                $params['imgColorType'] = $this->request['imgColorType'];
             }
         }
 
