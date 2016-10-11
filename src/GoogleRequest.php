@@ -4,16 +4,16 @@ namespace Wolfish;
 
 class GoogleRequest
 {
-    private $_client;
-    private $_service;
+    private $client;
+    private $service;
 
     public function __construct()
     {
-        $this->_client = new \Google_Client();
-        $this->_client->setApplicationName(Config::GOOGLE_APP_NAME);
-        $this->_client->setDeveloperKey(Config::GOOGLE_DEV_KEY);
+        $this->client = new \Google_Client();
+        $this->client->setApplicationName(Config::GOOGLE_APP_NAME);
+        $this->client->setDeveloperKey(Config::GOOGLE_DEV_KEY);
 
-        $this->_service = new \Google_Service_Customsearch($this->_client);
+        $this->service = new \Google_Service_Customsearch($this->client);
 
         return $this;
     }
@@ -24,13 +24,13 @@ class GoogleRequest
         $parameters = $params->getCseParameters();
 
         try {
-            $result = $this->_service->cse->listCse($text, $parameters);
+            $result = $this->service->cse->listCse($text, $parameters);
         } catch (\Google_Service_Exception $e) {
             if ($e->getCode() === 403) {
                 return '{ "text": "'.Config::GOOGLE_LIMIT_EXCEEDED.'" }';
-            } else {
-                return '{ "text": "'.$e->getMessage().'" }';
             }
+            
+            return '{ "text": "'.$e->getMessage().'" }';
         }
 
         $items = $result->getItems();

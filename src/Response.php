@@ -4,24 +4,24 @@ namespace Wolfish;
 
 class Response
 {
-    private $_items;
+    private $items;
 
     public function __construct($items)
     {
-        $this->_items = $items;
+        $this->items = $items;
     }
 
     public function getSlackResponse(Parameters $params)
     {
-        if (count($this->_items) > 1) {
-            foreach ($this->_items as $k => $item) {
+        if (count($this->items) > 1) {
+            foreach ($this->items as $k => $item) {
                 $responseText[] = $item;
                 if ($k == 19) {
                     break;
                 } // Slack limitation
             }
-        } elseif ($this->_items[0] instanceof \Google_Service_Customsearch_Result) {
-            $responseText = $this->_items[0];
+        } elseif ($this->items[0] instanceof \Google_Service_Customsearch_Result) {
+            $responseText = $this->items[0];
         } else {
             $responseText = Config::GOOGLE_NO_RESULT;
         }

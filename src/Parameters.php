@@ -4,19 +4,19 @@ namespace Wolfish;
 
 class Parameters
 {
-    private $_request;
-    private $_parsed = false;
+    private $request;
+    private $parsed = false;
 
     public function __construct(string $request)
     {
-        $this->_request['text'] = $request;
+        $this->request['text'] = $request;
     }
 
-    private function _parseRequest()
+    private function parseRequest()
     {
-        $this->_parsed = true;
+        $this->parsed = true;
         $regex = '/#(\d|gif|image|link|one|multi|priv|pub)/i';
-        $cmds = preg_split($regex, $this->_request['text'], null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $cmds = preg_split($regex, $this->request['text'], null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         foreach ($cmds as $k => $cmd) {
             $cmd = trim($cmd);
@@ -25,73 +25,74 @@ class Parameters
             }
 
             if (is_numeric($cmd)) {
-                $this->_request['index'] = $cmd;
+                $this->request['index'] = $cmd;
             }
 
             switch ($cmd) {
             case 'gif':
-                $this->_request['searchType'] = 'image';
-                $this->_request['fileType'] = 'gif';
+                $this->request['searchType'] = 'image';
+                $this->request['fileType'] = 'gif';
                 break;
 
             case 'image':
-                $this->_request['searchType'] = 'image';
+                $this->request['searchType'] = 'image';
                 break;
 
             case 'link':
-                $this->_request['searchType'] = 'link'; // internal, not a google value!
+                $this->request['searchType'] = 'link'; // internal, not a google value!
                 break;
 
             case 'one':
-                $this->_request['num'] = 1;
+                $this->request['num'] = 1;
                 break;
 
             case 'multi':
-                $this->_request['num'] = 0;
+                $this->request['num'] = 0;
                 break;
 
             case 'pub':
-                $this->_request['slack']['response_type'] = 'in_channel';
+                $this->request['slack']['response_type'] = 'in_channel';
                 break;
 
             case 'priv':
-                $this->_request['slack']['response_type'] = 'ephemeral';
+                $this->request['slack']['response_type'] = 'ephemeral';
                 break;
             }
         }
 
-        $this->_request['text'] = trim($cmds[count($cmds) - 1]);
+        $this->request['text'] = trim($cmds[count($cmds) - 1]);
     }
 
     public function getCseParameters()
     {
         $params = Config::GOOGLE_SEARCH_PARAMETERS;
 
-        if (!$this->_parsed) {
-            $this->_parseRequest();
+        if (!$this->parsed) {
+            $this->parseRequest();
         }
 
-        $params['q'] = $this->_request['text'];
+        $params['q'] = $this->request['text'];
         $params['cx'] = Config::GOOGLE_CX_KEY;
-        $params['start'] = (isset($this->_request['index']) ? $this->_request['index'] : 1);
-        if (isset($this->_request['num'])) {
-            if ($this->_request['num'] > 0) {
-                $params['num'] = $this->_request['num'];
-            } else {
-                if (isset($params['num'])) {
-                    unset($params['num']);
-                }
+        $params['start'] = (isset($this->request['index']) ? $this->request['index'] : 1);
+
+        if (isset($this->request['num'])) {
+            if ($this->request['num'] > 0) {
+                $params['num'] = $this->request['num'];
+            } elseif (isset($params['num'])) {
+                unset($params['num']);
             }
         }
-        if (isset($this->_request['searchType'])) {
-            if ($this->_request['searchType'] === 'link') {
+
+        if (isset($this->request['searchType'])) {
+            if ($this->request['searchType'] === 'link') {
                 unset($params['searchType']);
             } else {
-                $params['searchType'] = $this->_request['searchType'];
+                $params['searchType'] = $this->request['searchType'];
             }
         }
-        if (isset($this->_request['fileType'])) {
-            $params['fileType'] = $this->_request['fileType'];
+
+        if (isset($this->request['fileType'])) {
+            $params['fileType'] = $this->request['fileType'];
         }
 
         return $params;
@@ -101,12 +102,12 @@ class Parameters
     {
         $slackParams = Config::SLACK_RESPONSE_PARAMETERS;
 
-        if (!$this->_parsed) {
-            $this->_parseRequest();
+        if (!$this->parsed) {
+            $this->parseRequest();
         }
 
-        if (isset($this->_request['slack']['response_type'])) {
-            $slackParams['response_type'] = $this->_request['slack']['response_type'];
+        if (isset($this->request['slack']['response_type'])) {
+            $slackParams['response_type'] = $this->request['slack']['response_type'];
         }
 
         return $slackParams;
@@ -114,6 +115,6 @@ class Parameters
 
     public function isImageSearch()
     {
-        return isset($this->_request['searchType']) && ($this->_request['searchType'] === 'image');
+        return isset($this->request['searchType']) && ($this->request['searchType'] === 'image');
     }
 }
