@@ -13,6 +13,11 @@ class Response
 
     public function getSlackResponse(Parameters $params)
     {
+        if (empty($this->items)) {
+            $response['text'] = Config::GOOGLE_NO_RESULT;
+            return json_encode($response);
+        }
+
         if (count($this->items) > 1) {
             foreach ($this->items as $k => $item) {
                 $responseText[] = $item;
@@ -22,8 +27,6 @@ class Response
             }
         } elseif ($this->items[0] instanceof \Google_Service_Customsearch_Result) {
             $responseText = $this->items[0];
-        } else {
-            $responseText = Config::GOOGLE_NO_RESULT;
         }
 
         $response = $params->getSlackParameters();

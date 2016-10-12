@@ -34,6 +34,6 @@ if (!isset($argv[1])) {
     }
 }
 
-$result = new GoogleRequest();
-echo $result->listCseRequest($_POST['text']);
+$result = new GoogleRequest($_POST['text']);
+echo $result->listCseRequest();
 if (isset($argv[1])) echo "\n";

@@ -10,6 +10,7 @@ class Parameters
     public function __construct(string $request)
     {
         $this->request['text'] = $request;
+        $this->parseRequest();
     }
 
     private function parseRequest()
@@ -36,9 +37,9 @@ class Parameters
 
             case 'image':
                 $this->request['searchType'] = 'image';
+                $this->request['imgColorType'] = 'color';
                 break;
 
-            case 'color':
             case 'gray':
             case 'mono':
                 $this->request['searchType'] = 'image';
@@ -74,10 +75,6 @@ class Parameters
     {
         $params = Config::GOOGLE_SEARCH_PARAMETERS;
 
-        if (!$this->parsed) {
-            $this->parseRequest();
-        }
-
         $params['q'] = $this->request['text'];
         $params['cx'] = Config::GOOGLE_CX_KEY;
         $params['start'] = (isset($this->request['index']) ? $this->request['index'] : 1);
@@ -109,10 +106,6 @@ class Parameters
     public function getSlackParameters()
     {
         $slackParams = Config::SLACK_RESPONSE_PARAMETERS;
-
-        if (!$this->parsed) {
-            $this->parseRequest();
-        }
 
         if (isset($this->request['slack']['response_type'])) {
             $slackParams['response_type'] = $this->request['slack']['response_type'];

@@ -23,7 +23,7 @@ Also, by configuring the CSE itself you can limit searches to one site, or make 
 - `#image` - get result as an image (default)
   - **Using any of below commands forces result type as image**
   - `#gif` - get result as an GIF image
-  - `#color` / `#gray` / `#mono` - search only for images: color, grayscale, black&white
+  - `#gray` / `#mono` - search only for images: grayscale / black&white
 
 ### Slack display
 - `#priv` - display results only for you
