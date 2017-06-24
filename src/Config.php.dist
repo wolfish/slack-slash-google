@@ -9,6 +9,7 @@ abstract class Config
     
     // App settings
     const MAXPOST = 10000;
+    const LOG_ERRORS = 'errors.log';
     const MULTIPLE_RESULTS_TEXT = 'Here are the results';
     const BANNED_TEXT = 'You don\'t have permission to use this command';
     const BANNED_USERS = [
@@ -20,7 +21,7 @@ abstract class Config
         // everyone else not included here will be treated as banned
         // disregards BANNED_USERS if not empty
     ];
-
+    
 
     // Slack settings
     const SLACK_TOKEN = 'your_slack_slash_command_token';

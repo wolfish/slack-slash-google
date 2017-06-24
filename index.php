@@ -1,5 +1,6 @@
 <?php
 use Wolfish\Config;
+use Wolfish\SlackEnum;
 use Wolfish\User;
 use Wolfish\GoogleRequest;
 
@@ -13,7 +14,7 @@ if (isset($argv[1])) {
 }
 
 if (mb_strlen(serialize($_POST), '8bit') > Config::MAXPOST) {
-    echo '{ "text": "Input data too big" }';
+    echo '{ "response_type": "'.SlackEnum::RESPONSE_TYPE_PRIVATE.'", "text": "Input data too big" }';
     exit;
 }
 
@@ -22,12 +23,14 @@ foreach ($_POST as $key => $val) {
 }
 
 if ($_POST['token'] !== Config::SLACK_TOKEN) {
-    echo '{ "text": "Invalid slack token" }';
+    echo '{ "response_type": "'.SlackEnum::RESPONSE_TYPE_PRIVATE.'", "text": "Invalid slack token" }';
     exit;
 }
 
 if (!isset($argv[1])) {
-    $user = new User($_POST['user_id'], $_POST['user_name']);
+    $uid = $_POST['user_id'];
+    $user = new User($uid, $_POST['user_name']);
+
     $access = $user->checkAccess();
     if ($access !== true) {
         echo $access;

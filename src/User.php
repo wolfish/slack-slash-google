@@ -31,7 +31,7 @@ class User
     public function checkAccess()
     {
         if (!$this->isAllowed()) {
-            return '{ "response_type": "ephemeral", "text": "'.Config::BANNED_TEXT.'" }';
+            return '{ "response_type": "'.SlackEnum::RESPONSE_TYPE_PRIVATE.'", "text": "'.Config::BANNED_TEXT.'" }';
         }
 
         return true;
